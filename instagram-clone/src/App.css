@@ -19,3 +19,16 @@
     cursor: pointer;
   }
   
+  .post {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin: 1rem auto;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 8px;
+  }
+  .post img {
+    width: 100%;
+    border-radius: 4px;
+  }
+  
