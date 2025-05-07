@@ -1,7 +1,7 @@
 // components/AuthForm.jsx
 import { useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from './firebase';
 
 function AuthForm() {
   const [email, setEmail] = useState('');

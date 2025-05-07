@@ -1,0 +1,21 @@
+.auth-form, header, form {
+    margin: 1rem auto;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  input {
+    display: block;
+    margin: 0.5rem auto;
+    padding: 0.5rem;
+    width: 90%;
+  }
+  
+  button {
+    padding: 0.5rem 1rem;
+    background: #0095f6;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  

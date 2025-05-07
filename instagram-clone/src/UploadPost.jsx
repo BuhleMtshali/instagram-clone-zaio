@@ -1,60 +1,48 @@
-import React, { useState } from 'react';
-import { db } from './firebase'; // your firebase.js file
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { useAuth } from './AuthContext'; // assuming you're managing auth context
 
-const UploadPost = () => {
+// components/UploadPost.jsx
+import { useState } from 'react';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from "./firebase";
+
+function UploadPost({ user }) {
   const [caption, setCaption] = useState('');
-  const [imageFile, setImageFile] = useState(null);
-  const { currentUser } = useAuth(); // to get current user ID
+  const [imageUrl, setImageUrl] = useState('');
 
   const handleUpload = async (e) => {
     e.preventDefault();
-
-    if (!imageFile || !caption) return alert('Please select an image and write a caption.');
-
-    const reader = new FileReader();
-    reader.readAsDataURL(imageFile);
-
-    reader.onloadend = async () => {
-      const base64Image = reader.result;
-
-      try {
-        await addDoc(collection(db, 'posts'), {
-          caption,
-          image: base64Image,
-          userId: currentUser.uid,
-          createdAt: serverTimestamp(),
-        });
-
-        setCaption('');
-        setImageFile(null);
-        alert('Post uploaded!');
-      } catch (err) {
-        console.error(err);
-        alert('Error uploading post.');
-      }
-    };
+    try {
+      await addDoc(collection(db, 'posts'), {
+        username: user.email,
+        caption,
+        imageUrl,
+        createdAt: serverTimestamp(),
+      });
+      setCaption('');
+      setImageUrl('');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
-    <form onSubmit={handleUpload} className="upload-form">
+    <form onSubmit={handleUpload}>
       <input
         type="text"
+        placeholder="Enter a caption..."
         value={caption}
         onChange={(e) => setCaption(e.target.value)}
-        placeholder="Write a caption..."
         required
       />
       <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setImageFile(e.target.files[0])}
+        type="text"
+        placeholder="Image URL"
+        value={imageUrl}
+        onChange={(e) => setImageUrl(e.target.value)}
         required
       />
-      <button type="submit">Upload</button>
+      <button type="submit">Upload Post</button>
     </form>
   );
-};
+}
 
 export default UploadPost;

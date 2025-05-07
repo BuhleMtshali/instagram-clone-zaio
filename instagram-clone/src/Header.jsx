@@ -1,9 +1,17 @@
-import React from 'react'
+// components/Header.jsx
+import { signOut } from 'firebase/auth';
+import { auth } from './firebase';
 
-const Header = () => {
+function Header({ user }) {
   return (
-    <div>Header</div>
-  )
+    <header>
+      <h1>📸 InstaClone</h1>
+      <div>
+        <span>{user.email}</span>
+        <button onClick={() => signOut(auth)}>Logout</button>
+      </div>
+    </header>
+  );
 }
 
 export default Header;

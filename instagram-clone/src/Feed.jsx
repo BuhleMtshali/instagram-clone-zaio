@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
-import { db } from './firebase'; // ✅ use db from your firebase setup
-import Post from './Post'; // a component to display a post
+import { db } from './firebase'; 
+import Post from './Post'; 
 
 function Feed() {
   const [posts, setPosts] = useState([]);
