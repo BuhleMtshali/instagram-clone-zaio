@@ -3,3 +3,16 @@
 *{
     font-family: "Inter Tight", sans-serif;
 }
+
+.post {
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 500px;
+    padding: 10px;
+  }
+  .post img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  
