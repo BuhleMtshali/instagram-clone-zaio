@@ -1,3 +1,28 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+
+header {
+  background: white;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+header img {
+  width: 30px;
+  height: 30px;
+}
+
+
 .auth-form, header, form {
     margin: 1rem auto;
     max-width: 400px;
@@ -32,3 +57,62 @@
     border-radius: 4px;
   }
   
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .auth-info {
+    margin: 20px 0;
+    font-size: 1.1rem;
+  }
+  
+  .logout-button {
+    background-color: #0095f6;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    margin: 0 auto 30px;
+  }
+  
+  .upload-form input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .upload-form button {
+    background-color: #0095f6;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .post {
+    background: white;
+    border: 1px solid #dbdbdb;
+    margin: 20px auto;
+    padding: 15px;
+    width: 400px;
+    border-radius: 10px;
+    text-align: left;
+  }
+  
+  .post img {
+    width: 100%;
+    border-radius: 8px;
+    margin: 10px 0;
+  }

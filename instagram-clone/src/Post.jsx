@@ -1,5 +1,6 @@
 // src/components/Post.jsx
 import React from 'react';
+import './App.css';
 
 function Post({ username, caption, imageUrl }) {
   return (

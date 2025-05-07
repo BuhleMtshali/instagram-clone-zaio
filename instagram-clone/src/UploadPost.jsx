@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from "./firebase";
+import './App.css';
 
 function UploadPost({ user }) {
   const [caption, setCaption] = useState('');
