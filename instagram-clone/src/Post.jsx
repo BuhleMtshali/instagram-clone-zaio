@@ -5,12 +5,17 @@ import './App.css';
 
 function Post({ id, username, caption, imageUrl, currentUser }) {
   const [likes, setLikes] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [showComments, setShowComments] = useState(false);
+  const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
     const postRef = doc(db, 'posts', id);
     const unsubscribe = onSnapshot(postRef, (docSnap) => {
       if (docSnap.exists()) {
+        const data = docSnap.data();
         setLikes(docSnap.data().likes || []);
+        setComments(data.comments || []);
       }
     });
 
@@ -40,6 +45,23 @@ function Post({ id, username, caption, imageUrl, currentUser }) {
     }
   };
 
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+
+    const postRef = doc(db, 'posts', id);
+    await updateDoc(postRef, {
+      comments: arrayUnion({
+        user: currentUser.email,
+        text: newComment,
+        createdAt: new Date().toISOString()
+      })
+    });
+
+    setNewComment('');
+  };
+
+
   return (
     <div style={styles.post}>
       <h3>{username}</h3>
@@ -48,30 +70,47 @@ function Post({ id, username, caption, imageUrl, currentUser }) {
         <strong>{username}</strong> {caption}
       </p>
 
-      {/* Heart Icon and Count */}
-      <div className="icons">
-      <div style={styles.likeContainer}>
-        <span
-          className="material-icons"
-          onClick={toggleLike}
-          style={{
-            ...styles.heartIcon,
-            color: hasLiked ? 'red' : '#888',
-          }}
-        >
-          {hasLiked ? 'favorite' : 'favorite_border'}
+      <div style={styles.actionRow}>
+        <span className="material-icons" onClick={toggleLike} style={{ ...styles.icon, color: hasLiked ? 'red' : 'gray' }}>
+          favorite
         </span>
-        <div style={styles.likeCount}>{likes.length} {likes.length === 1 ? 'like' : 'likes'}</div>
+        <span>{likes.length} likes</span>
+
+        <span className="material-icons" onClick={() => setShowComments(!showComments)} style={styles.icon}>
+          chat_bubble_outline
+        </span>
+        <span>{comments.length} comments</span>
       </div>
 
-      {currentUser.email === username && (
-      <div onClick={handleDelete} style={styles.deleteBtn}>
-      <span className="material-icons" style={styles.deleteIcon}>
-      delete_outline
-      </span>
-      </div>
-        )}
+      {showComments && (
+        <div style={styles.commentSection}>
+          {comments.map((comment, index) => (
+            <p key={index}>
+              <strong>{comment.user}</strong>: {comment.text}
+            </p>
+          ))}
+          <form onSubmit={handleCommentSubmit} style={styles.commentForm}>
+            <input
+              type="text"
+              placeholder="Add a comment..."
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              style={styles.commentInput}
+            />
+            <button type="submit" style={styles.commentBtn}>
+              Post
+            </button>
+          </form>
         </div>
+      )}
+
+      {currentUser.email === username && (
+        <div onClick={handleDelete} style={styles.deleteBtn}>
+          <span className="material-icons" style={styles.deleteIcon}>
+            delete_outline
+          </span>
+        </div>
+      )}
     </div>
   );
 }
@@ -118,6 +157,48 @@ const styles = {
     borderRadius: '5px',
     cursor: 'pointer',
   },
+  actionRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem',
+    marginTop: '0.5rem',
+    marginBottom: '0.5rem',
+  },
+  
+  icon: {
+    cursor: 'pointer',
+    fontSize: '24px',
+  },
+  
+  commentSection: {
+    marginTop: '1rem',
+    padding: '0.5rem',
+    backgroundColor: '#f9f9f9',
+    borderRadius: '8px',
+  },
+  
+  commentForm: {
+    display: 'flex',
+    marginTop: '0.5rem',
+    gap: '0.5rem',
+  },
+  
+  commentInput: {
+    flex: 1,
+    padding: '0.5rem',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+  },
+  
+  commentBtn: {
+    padding: '0.5rem 1rem',
+    backgroundColor: '#0095f6',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+  },
+  
 };
 
 export default Post;
