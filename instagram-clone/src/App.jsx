@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase'; 
-import './App.css'
+import { auth } from './firebase';
+import AuthForm from './AuthForm';
+import Header from './Header';
+import Feed from './Feed';
+import UploadPost from './UploadPost';
+import './App.css';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -14,10 +18,18 @@ function App() {
   }, []);
 
   return (
-    <>
-      <h1>Welcome {user ? user.email : 'Guest'} 👋</h1>
-    </>
-  )
+    <div className="App">
+      {user ? (
+        <>
+          <Header user={user} />
+          <UploadPost user={user} />
+          <Feed />
+        </>
+      ) : (
+        <AuthForm />
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
