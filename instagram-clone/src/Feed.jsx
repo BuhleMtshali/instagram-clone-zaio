@@ -25,7 +25,7 @@ function Feed({ user }) {
   }, []);
 
   return (
-    <div>
+    <div className='posts-wrapper'>
       {posts.map(({ id, username, caption, imageUrl }) => (
         <Post
         key={id}
