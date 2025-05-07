@@ -24,11 +24,23 @@ header {
   color: #F5F5F5;
 }
 
-header img {
-  width: 30px;
-  height: 30px;
+h1{
+  color: #D6D6D6;
 }
 
+header h1{
+  color: #C53424;
+}
+
+header img {
+  width: 80px;
+  height: 80px;
+}
+
+.icons{
+  display: flex;
+  align-items: center;
+}
 
 .auth-form, header, form {
     margin: 1rem auto;

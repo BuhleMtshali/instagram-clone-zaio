@@ -20,7 +20,7 @@ function App() {
   return (
     <div className='main-container'>
       <header>
-        <img src="https://cdn-icons-png.flaticon.com/512/87/87390.png" alt="camera" />
+        <img src="/src/assets/favicon.png" alt="camera" />
         <h1>InstaClone</h1>
       </header>
 

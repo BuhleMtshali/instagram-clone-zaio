@@ -17,9 +17,9 @@ function Post({ id, username, caption, imageUrl, currentUser }) {
     return () => unsubscribe();
   }, [id]);
 
-  if (!currentUser) return null; // 💥 Guard the full component render
+  if (!currentUser) return null;
 
-  const hasLiked = likes.includes(currentUser.email); // now it's safe
+  const hasLiked = likes.includes(currentUser.email);
 
   const toggleLike = async () => {
     const postRef = doc(db, 'posts', id);
@@ -47,19 +47,34 @@ function Post({ id, username, caption, imageUrl, currentUser }) {
       <p>
         <strong>{username}</strong> {caption}
       </p>
-      <button onClick={toggleLike} style={styles.likeBtn}>
-        {hasLiked ? '💔 Unlike' : '❤️ Like'} ({likes.length})
-      </button>
+
+      {/* Heart Icon and Count */}
+      <div className="icons">
+      <div style={styles.likeContainer}>
+        <span
+          className="material-icons"
+          onClick={toggleLike}
+          style={{
+            ...styles.heartIcon,
+            color: hasLiked ? 'red' : '#888',
+          }}
+        >
+          {hasLiked ? 'favorite' : 'favorite_border'}
+        </span>
+        <div style={styles.likeCount}>{likes.length} {likes.length === 1 ? 'like' : 'likes'}</div>
+      </div>
 
       {currentUser.email === username && (
-        <button onClick={handleDelete} style={styles.deleteBtn}>
-          🗑 Delete
-        </button>
-      )}
+      <div onClick={handleDelete} style={styles.deleteBtn}>
+      <span className="material-icons" style={styles.deleteIcon}>
+      delete_outline
+      </span>
+      </div>
+        )}
+        </div>
     </div>
   );
 }
-
 
 const styles = {
   post: {
@@ -68,7 +83,8 @@ const styles = {
     padding: '1rem',
     margin: '1rem 0',
     textAlign: 'left',
-    color: "#F5F5F5",
+    color: '#333',
+    background: '#fff',
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
   },
   image: {
@@ -78,18 +94,25 @@ const styles = {
     borderRadius: '8px',
     marginBottom: '0.5rem',
   },
-  likeBtn: {
-    backgroundColor: '#0095f6',
-    color: 'white',
-    border: 'none',
-    padding: '0.5rem 1rem',
-    marginRight: '0.5rem',
-    borderRadius: '5px',
+  likeContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: '0.5rem',
+    marginBottom: '1rem',
     cursor: 'pointer',
   },
+  heartIcon: {
+    fontSize: '28px',
+    transition: 'color 0.3s ease',
+  },
+  likeCount: {
+    marginTop: '4px',
+    fontSize: '14px',
+    color: '#444',
+  },
   deleteBtn: {
-    backgroundColor: '#ff4d4d',
-    color: 'white',
+    color: '#0095F6',
     border: 'none',
     padding: '0.5rem 1rem',
     borderRadius: '5px',
