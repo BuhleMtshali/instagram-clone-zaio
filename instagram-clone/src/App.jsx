@@ -27,20 +27,23 @@ function App() {
       <div className="auth-info">
         {user ? (
           <>
-            <h1>Welcome {user ? user.email : 'Guest'} 👋</h1>
-            {user && <Feed user={user} />}
-            <button onClick={() => signOut(auth)} className="logout-button">Logout</button>
+            <h1>Welcome {user.email} 👋</h1>
+            <Feed user={user} />
+            <UploadPost user={user} />
+            <button onClick={() => signOut(auth)} className="logout-button">
+              Logout
+            </button>
           </>
         ) : (
-          <p>Please sign in.</p>
+          <>
+            <p>Please sign in.</p>
+            <AuthForm />
+          </>
         )}
       </div>
-
-      {user && <UploadPost user={user} />}
-
-      <Feed />
     </div>
   );
 }
+
 
 export default App;
