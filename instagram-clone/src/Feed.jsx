@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
-import { db } from './firebase'; 
+import { db } from './firebase';
 import Post from './Post';
 import './App.css';
 
@@ -9,14 +9,14 @@ function Feed() {
 
   useEffect(() => {
     const postsQuery = query(
-      collection(db, "posts"),
-      orderBy("createdAt", "desc")
+      collection(db, 'posts'),
+      orderBy('createdAt', 'desc')
     );
 
     const unsubscribe = onSnapshot(postsQuery, (snapshot) => {
-      const postList = snapshot.docs.map(doc => ({
+      const postList = snapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }));
       setPosts(postList);
     });

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './firebase';
 import AuthForm from './AuthForm';
 import Header from './Header';
@@ -18,16 +18,26 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      {user ? (
-        <>
-          <Header user={user} />
-          <UploadPost user={user} />
-          <Feed />
-        </>
-      ) : (
-        <AuthForm />
-      )}
+    <div>
+      <header>
+        <img src="https://cdn-icons-png.flaticon.com/512/87/87390.png" alt="camera" />
+        <h1>InstaClone</h1>
+      </header>
+
+      <div className="auth-info">
+        {user ? (
+          <>
+            {user.email}
+            <button onClick={() => signOut(auth)} className="logout-button">Logout</button>
+          </>
+        ) : (
+          <p>Please sign in.</p>
+        )}
+      </div>
+
+      {user && <UploadPost user={user} />}
+
+      <Feed />
     </div>
   );
 }

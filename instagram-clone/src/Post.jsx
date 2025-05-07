@@ -1,15 +1,15 @@
-// src/components/Post.jsx
 import React from 'react';
 import './App.css';
 
 function Post({ username, caption, imageUrl }) {
   return (
     <div className="post">
-      <h3>{username}</h3>
-      <img src={imageUrl} alt="post" width="300" />
+      <h4>{username}</h4>
+      <img src={imageUrl} alt="post" />
       <p><strong>{username}</strong> {caption}</p>
     </div>
   );
 }
 
 export default Post;
+
