@@ -19,6 +19,7 @@ function UploadPost({ user }) {
         caption,
         imageUrl,
         createdAt: serverTimestamp(),
+        likes: [],
       });
       setCaption('');
       setImageUrl('');

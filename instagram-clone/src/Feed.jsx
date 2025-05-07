@@ -28,10 +28,12 @@ function Feed() {
     <div>
       {posts.map(({ id, username, caption, imageUrl }) => (
         <Post
-          key={id}
-          username={username}
-          caption={caption}
-          imageUrl={imageUrl}
+        key={id}
+        id={id}
+        username={username}
+        caption={caption}
+        imageUrl={imageUrl}
+        currentUser={user}
         />
       ))}
     </div>
