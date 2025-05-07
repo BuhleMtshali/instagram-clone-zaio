@@ -17,7 +17,9 @@ function Post({ id, username, caption, imageUrl, currentUser }) {
     return () => unsubscribe();
   }, [id]);
 
-  const hasLiked = likes.includes(currentUser.email);
+  if (!currentUser) return null; // 💥 Guard the full component render
+
+  const hasLiked = likes.includes(currentUser.email); // now it's safe
 
   const toggleLike = async () => {
     const postRef = doc(db, 'posts', id);
@@ -57,6 +59,7 @@ function Post({ id, username, caption, imageUrl, currentUser }) {
     </div>
   );
 }
+
 
 const styles = {
   post: {

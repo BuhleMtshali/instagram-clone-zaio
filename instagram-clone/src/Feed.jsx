@@ -4,7 +4,7 @@ import { db } from './firebase';
 import Post from './Post';
 import './App.css';
 
-function Feed() {
+function Feed({ user }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {

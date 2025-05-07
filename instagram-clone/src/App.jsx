@@ -27,7 +27,8 @@ function App() {
       <div className="auth-info">
         {user ? (
           <>
-            {user.email}
+            <h1>Welcome {user ? user.email : 'Guest'} 👋</h1>
+            {user && <Feed user={user} />}
             <button onClick={() => signOut(auth)} className="logout-button">Logout</button>
           </>
         ) : (
